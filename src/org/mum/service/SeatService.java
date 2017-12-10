@@ -44,7 +44,7 @@ public class SeatService {
         seats.add(new Seat("A","22", Constant.SEATSTATUS_FREE, "30"));
 
     }
-    public static List<Seat> getSeatsnStatusByMovieIdnTimen(String time, String date, String id){
+    public static List<Seat> getSeatListByScheduleId(String scheduleId){
         seats.sort((Object o1, Object o2) -> {
             Seat s1 = (Seat) o1;
             Seat s2 = (Seat) o2;

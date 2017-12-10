@@ -13,7 +13,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -111,7 +110,8 @@ public class SellerSelectSeatsOnTemplateController implements Initializable {
         String date = preData[1];
         String time = preData[2];
         String duration = preData[3];
-        List<Seat> seats = SeatService.getSeatsnStatusByMovieIdnTimen(movieId, date, time);
+        String scheduleId = preData[4];
+        List<Seat> seats = SeatService.getSeatListByScheduleId(scheduleId);
         this.labDate.setText(date);
         this.labTime.setText(time);
         this.labDuration.setText(duration + " Minutes");
@@ -119,7 +119,7 @@ public class SellerSelectSeatsOnTemplateController implements Initializable {
         HBox temp = new HBox();
         temp.setMinHeight(50);
         temp.setAlignment(Pos.CENTER);
-        Hyperlink linkScreen = new Hyperlink("Screen");
+        Hyperlink linkScreen = new Hyperlink("THE SCREEN");
         linkScreen.setUnderline(true);
         temp.getChildren().add(linkScreen);
         this.vboxSeat.getChildren().add(temp);

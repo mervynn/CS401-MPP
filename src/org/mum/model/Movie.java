@@ -18,7 +18,7 @@ public class Movie {
     private String description;
     private String imageUrl;
     private String duration;
-    private List<String> schedules;
+    private List<Schedule> schedules;
 
     public String getId() {
         return id;
@@ -68,11 +68,11 @@ public class Movie {
         this.duration = duration;
     }
 
-    public List<String> getSchedules() {
+    public List<Schedule> getSchedules() {
         return schedules;
     }
 
-    public void setSchedules(List<String> schedules) {
+    public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
     }
     

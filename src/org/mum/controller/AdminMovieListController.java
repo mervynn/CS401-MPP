@@ -20,7 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
 import org.mum.context.ApplicationContext;
 import org.mum.model.Movie;
 import org.mum.service.MovieService;
@@ -103,14 +102,6 @@ public class AdminMovieListController implements Initializable {
     }
 
     @FXML
-    private void handleAddWindowAction(ActionEvent event) {
-        ApplicationContext.stage.setUserData(Constant.PAGETYPE_ADD);
-        ApplicationContext.stage.getScene().setUserData(this);
-        Utilities.openWindow("/org/mum/view/admin/movie/Modify.fxml");
-    }
-
-
-    @FXML
     private void handleLogoutAction(ActionEvent event) {
         ApplicationContext.currentUser = null;
         Utilities.replaceSceneContentWithNewStage("/org/mum/view/Login.fxml");
@@ -151,6 +142,13 @@ public class AdminMovieListController implements Initializable {
         List<Movie> fuzzyRes = MovieService.fuzzyQuery(this.txtSearch.getText());
         value.clear();
         value.addAll(fuzzyRes);
+    }
+    
+    @FXML
+    private void handleAddWindowAction(ActionEvent event) {
+        ApplicationContext.stage.setUserData(Constant.PAGETYPE_ADD);
+        ApplicationContext.stage.getScene().setUserData(this);
+        Utilities.openWindow("/org/mum/view/admin/movie/Modify.fxml");
     }
 
     @FXML

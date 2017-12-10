@@ -20,7 +20,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
@@ -36,6 +35,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.mum.context.ApplicationContext;
 import org.mum.model.Movie;
+import org.mum.model.Schedule;
 import org.mum.service.ScheduleService;
 import org.mum.utilities.Utilities;
 
@@ -124,7 +124,7 @@ public class SellerScheduleListController implements Initializable {
     
     private void createMovieWithScheduleVBox(String date){
         vboxMovieSchedule.getChildren().clear();
-        List<Movie> list = ScheduleService.getSchedule(date);
+        List<Movie> list = ScheduleService.getMovieWithSchedule(date);
         double anchorHeight = 0;
         for(Movie m : list){
             anchorHeight += 162;
@@ -175,18 +175,21 @@ public class SellerScheduleListController implements Initializable {
             timeH.getChildren().add(timeSel);
             
             HBox timeLinkH = new HBox();
-            for(String time : m.getSchedules()){
+            for(Schedule s : m.getSchedules()){
                 Hyperlink timeLink = new Hyperlink();
-                timeLink.setText(time);
+                timeLink.setUserData(s.getId());
+                timeLink.setText(s.getTime());
                 timeLinkH.getChildren().add(timeLink);
                 timeLink.setOnMouseClicked(new EventHandler(){
                     @Override
                     public void handle(Event event) {
+                        Hyperlink curLink = (Hyperlink) event.getSource();
                         ApplicationContext.stage.setUserData(new String[]{
-                            ((Hyperlink) event.getSource()).getParent().getUserData().toString(),
+                            curLink.getParent().getUserData().toString(),
                             hboxTimeSchedule.getUserData().toString(),
-                            ((Hyperlink) event.getSource()).getText(),
-                            m.getDuration()
+                            curLink.getText(),
+                            m.getDuration(),
+                            curLink.getId()
                         });
                         Utilities.replaceSceneContent("/org/mum/view/seller/seat/Template.fxml");
                     }

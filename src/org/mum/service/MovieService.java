@@ -79,7 +79,9 @@ public class MovieService {
     public static List<Movie> fuzzyQuery(String keyword){
         List<Movie> res = new ArrayList<Movie>();
         for(Movie m : MOVIE)
-            if(m.getTitle().contains(keyword) || m.getDescription().contains(keyword))
+            if(m.getTitle().contains(keyword) || m.getDescription().contains(keyword) 
+                || m.getId().contains(keyword) || m.getDuration().contains(keyword)
+                || m.getGenre().contains(keyword) || m.getImageUrl().contains(keyword))
                 res.add(m);
         return res;
     }
