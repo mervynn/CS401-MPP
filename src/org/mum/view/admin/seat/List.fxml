@@ -23,7 +23,7 @@
             </HBox>
          </bottom>
          <center>
-            <VBox centerShape="false" prefHeight="290.0" prefWidth="485.0" style="-fx-border-color: #c8c8c8;" />
+            <VBox alignment="CENTER" centerShape="false" prefHeight="290.0" prefWidth="485.0" style="-fx-border-color: #c8c8c8;" />
          </center>
          <left>
             <VBox prefHeight="290.0" prefWidth="109.0" BorderPane.alignment="CENTER">

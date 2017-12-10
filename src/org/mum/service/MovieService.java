@@ -41,6 +41,8 @@ public class MovieService {
         MOVIE.add(m);
         MOVIE.add(m1);
         MOVIE.add(m2);
+        MOVIE.add(m2);
+        MOVIE.add(m2);
     }
     public static List<Movie> getMovieList(){
         return MOVIE;

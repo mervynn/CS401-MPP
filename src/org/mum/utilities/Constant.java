@@ -12,4 +12,8 @@ package org.mum.utilities;
 public class Constant {
     public final static String PAGETYPE_ADD = "0";
     public final static String PAGETYPE_EDIT = "1";
+    public final static String SEATSTATUS_FREE = "0";
+    public final static String SEATSTATUS_OCCUPIED = "1";
+    public final static String SEATSTATUS_LOCKED_BYME = "2";
+    public final static String SEATSTATUS_LOCKED_BYOTHERONE = "3";
 }

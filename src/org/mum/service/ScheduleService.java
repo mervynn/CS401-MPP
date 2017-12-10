@@ -14,7 +14,7 @@ import org.mum.model.Movie;
  * @author Mingwei
  */
 public class ScheduleService {
-    public static List<Movie> getSchedule(){
+    public static List<Movie> getSchedule(String date){
         List<String> sc = new ArrayList<String>();
         sc.add("12:00");
         sc.add("15:00");

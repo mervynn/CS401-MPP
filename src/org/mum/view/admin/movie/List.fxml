@@ -88,7 +88,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="533.0">
+                  <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="544.0">
                      <children>
                         <Hyperlink fx:id="linkChangePin" onAction="#handleChangePINWindowAction" style="-fx-underline: true;" text="Change PIN" />
                         <Hyperlink fx:id="linkLogout" onAction="#handleLogoutAction" style="-fx-underline: true;" text="Logout" />

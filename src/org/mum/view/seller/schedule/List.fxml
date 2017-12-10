@@ -25,9 +25,9 @@
             </HBox>
          </bottom>
          <center>
-            <VBox fx:id="vboxMovieSchedule" centerShape="false" prefHeight="290.0" prefWidth="485.0" style="-fx-border-color: #c8c8c8;">
+            <VBox centerShape="false" prefHeight="290.0" prefWidth="485.0" style="-fx-border-color: #c8c8c8;">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="889.0">
+                  <HBox fx:id="hboxTimeSchedule" alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="889.0">
                      <children>
                         <Hyperlink text="09-12-2017" underline="true" />
                         <Hyperlink text="10-12-2017" underline="true" />
@@ -36,58 +36,66 @@
                         <Hyperlink text="13-12-2017" underline="true" />
                      </children>
                   </HBox>
-                  <VBox prefHeight="482.0" prefWidth="889.0">
-                     <children>
-                        <HBox prefHeight="162.0" prefWidth="200.0">
+                  <ScrollPane prefHeight="482.0" prefWidth="889.0">
+                    <content>
+                      <AnchorPane fx:id="anchorPaneMovie" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="862.0">
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
+                              <VBox fx:id="vboxMovieSchedule" prefHeight="377.0" prefWidth="887.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-25.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <ImageView fitHeight="150.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../../assets/img/avatar.jpg" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="100.0" prefWidth="791.0">
-                                 <children>
-                                    <HBox prefHeight="12.0" prefWidth="785.0">
+                                    <HBox prefHeight="162.0" prefWidth="651.0">
                                        <children>
-                                          <Label text="AVATAR" />
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="47.0" prefWidth="785.0">
-                                       <children>
-                                          <Label text="Label" />
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="81.0" prefWidth="785.0">
-                                       <children>
-                                          <Label text="On the lush alien world of Pandora live the Na'vi, beings who appear primitive but are highly evolved. Because the planet's environment is poisonous, human/Na'vi hybrids, called Avatars, must link to human minds to allow for free movement on Pandora. Jake Sully (Sam Worthington), a paralyzed former Marine,..." wrapText="true" />
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="39.0" prefWidth="785.0">
-                                       <children>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="78.0">
+                                          <VBox prefHeight="200.0" prefWidth="100.0">
                                              <children>
-                                                <Label text="Select time" />
+                                                <ImageView fitHeight="150.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../assets/img/avatar.jpg" />
+                                                   </image>
+                                                </ImageView>
                                              </children>
-                                          </HBox>
-                                          <HBox prefHeight="28.0" prefWidth="258.0">
+                                          </VBox>
+                                          <VBox prefHeight="109.0" prefWidth="547.0">
                                              <children>
-                                                <Hyperlink prefHeight="28.0" prefWidth="50.0" text="15:00" underline="true" />
-                                                <Hyperlink prefHeight="28.0" prefWidth="50.0" text="17:00" underline="true" />
-                                                <Hyperlink prefHeight="28.0" prefWidth="50.0" text="20:00" underline="true" />
+                                                <HBox prefHeight="12.0" prefWidth="785.0">
+                                                   <children>
+                                                      <Label text="AVATAR" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="47.0" prefWidth="785.0">
+                                                   <children>
+                                                      <Label text="Label" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="81.0" prefWidth="785.0">
+                                                   <children>
+                                                      <Label text="On the lush alien world of Pandora live the Na'vi, beings who appear primitive but are highly evolved. Because the planet's environment is poisonous, human/Na'vi hybrids, called Avatars, must link to human minds to allow for free movement on Pandora. Jake Sully (Sam Worthington), a paralyzed former Marine,..." wrapText="true" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="39.0" prefWidth="785.0">
+                                                   <children>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="78.0">
+                                                         <children>
+                                                            <Label text="Select time" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="28.0" prefWidth="258.0">
+                                                         <children>
+                                                            <Hyperlink prefHeight="28.0" prefWidth="50.0" text="15:00" underline="true" />
+                                                            <Hyperlink prefHeight="28.0" prefWidth="50.0" text="17:00" underline="true" />
+                                                            <Hyperlink prefHeight="28.0" prefWidth="50.0" text="20:00" underline="true" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </HBox>
                                              </children>
-                                          </HBox>
+                                          </VBox>
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
                            </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
                </children></VBox>
          </center>
          <left>

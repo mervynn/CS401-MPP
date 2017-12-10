@@ -20,13 +20,16 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -34,7 +37,6 @@ import javafx.scene.text.FontWeight;
 import org.mum.context.ApplicationContext;
 import org.mum.model.Movie;
 import org.mum.service.ScheduleService;
-import org.mum.utilities.AlertMaker;
 import org.mum.utilities.Utilities;
 
 /**
@@ -55,17 +57,21 @@ public class SellerScheduleListController implements Initializable {
     @FXML
     private Hyperlink linkLogout;
     @FXML
-    private VBox vboxMovieSchedule;
+    private Pane vboxMovieSchedule;
+    @FXML
+    private HBox hboxTimeSchedule;
+    @FXML
+    private AnchorPane anchorPaneMovie;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<Movie> schedule = ScheduleService.getSchedule();
-        vboxMovieSchedule.getChildren().clear();
-        vboxMovieSchedule.getChildren().add(createTimeHBox());
-        vboxMovieSchedule.getChildren().add(createMovieWithScheduleVBox(schedule));
+        createTimeHBox();
+        String today = new SimpleDateFormat("MMM-dd-yyyy").format(new Date());
+        hboxTimeSchedule.setUserData(today);
+        createMovieWithScheduleVBox(today);
     }    
 
     @FXML
@@ -94,10 +100,8 @@ public class SellerScheduleListController implements Initializable {
         Utilities.replaceSceneContent("/org/mum/view/seller/seat/List.fxml");
     }
     
-    private HBox createTimeHBox(){
-        HBox h = new HBox();
-        h.setPrefHeight(39);
-        h.setAlignment(Pos.CENTER_LEFT);
+    private void createTimeHBox(){
+        hboxTimeSchedule.getChildren().clear();
         SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yyyy");
         Calendar cal = Calendar.getInstance();
         sdf.format(new Date());
@@ -109,18 +113,21 @@ public class SellerScheduleListController implements Initializable {
             hl.setOnMouseClicked(new EventHandler(){
                 @Override
                 public void handle(Event event) {
-                    AlertMaker.showMessage("TODO");
+                    String selectedDate = ((Hyperlink) event.getSource()).getText();
+                    hboxTimeSchedule.setUserData(selectedDate);
+                    createMovieWithScheduleVBox(selectedDate);
                 }
             });
-            h.getChildren().add(hl);
+            hboxTimeSchedule.getChildren().add(hl);
         }
-        
-        return h;
     }
     
-    private VBox createMovieWithScheduleVBox(List<Movie> list){
-        VBox v = new VBox();
+    private void createMovieWithScheduleVBox(String date){
+        vboxMovieSchedule.getChildren().clear();
+        List<Movie> list = ScheduleService.getSchedule(date);
+        double anchorHeight = 0;
         for(Movie m : list){
+            anchorHeight += 162;
             HBox schedule = new HBox();
             schedule.setPrefHeight(162);
             
@@ -175,19 +182,23 @@ public class SellerScheduleListController implements Initializable {
                 timeLink.setOnMouseClicked(new EventHandler(){
                     @Override
                     public void handle(Event event) {
-                        AlertMaker.showMessage(((Hyperlink) event.getSource()).getText());
+                        ApplicationContext.stage.setUserData(new String[]{
+                            ((Hyperlink) event.getSource()).getParent().getUserData().toString(),
+                            hboxTimeSchedule.getUserData().toString(),
+                            ((Hyperlink) event.getSource()).getText(),
+                            m.getDuration()
+                        });
+                        Utilities.replaceSceneContent("/org/mum/view/seller/seat/Template.fxml");
                     }
                 });
             }
+            timeLinkH.setUserData(m.getId());
             timeH.getChildren().add(timeLinkH);
-            
             detailV.getChildren().add(timeH);
-            
             schedule.getChildren().add(detailV);
-            
-            v.getChildren().add(schedule);
+            vboxMovieSchedule.getChildren().add(schedule);
         }
-        return v;
+        this.anchorPaneMovie.setPrefHeight(anchorHeight);
     }
 
 }
