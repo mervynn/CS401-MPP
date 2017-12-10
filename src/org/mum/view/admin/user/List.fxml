@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mum.controller.AdminUserListController">
+   <children>
+      <BorderPane layoutX="-4.0" layoutY="58.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2017 Mingwei &amp; Dalsian">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Text>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <VBox centerShape="false" prefHeight="290.0" prefWidth="485.0" style="-fx-border-color: #c8c8c8;" />
+         </center>
+         <left>
+            <VBox prefHeight="290.0" prefWidth="109.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnMainpage" mnemonicParsing="false" onAction="#handleMainpageAction" prefHeight="27.0" prefWidth="114.0" text="Mainpage" />
+                  <Button fx:id="btnMovie" mnemonicParsing="false" onAction="#handleMovieManageAction" prefHeight="27.0" prefWidth="125.0" text="Movie Manage" />
+                  <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#handleScheduleAction" prefHeight="27.0" prefWidth="118.0" text="Schedule" />
+                  <Button fx:id="btnSeats" mnemonicParsing="false" onAction="#handleReleaseAction" prefHeight="27.0" prefWidth="116.0" text="Release Seats" />
+                  <Button fx:id="btnUser" defaultButton="true" mnemonicParsing="false" onAction="#handleUserManageAction" prefHeight="27.0" prefWidth="115.0" text="User Manage" />
+               </children>
+            </VBox>
+         </left>
+         <top>
+            <HBox prefHeight="48.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="43.0" prefWidth="496.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="521.0" style="-fx-font-family: &quot;Arial Rounded MT Bold&quot;, &quot;Helvetica Rounded&quot;, Arial, sans-serif;;" text="Cinema Ticketing System" textFill="#50a6de">
+                           <font>
+                              <Font size="33.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="544.0">
+                     <children>
+                        <Hyperlink fx:id="linkChangePin" onAction="#handleChangePINWindowAction" style="-fx-underline: true;" text="Change PIN" />
+                        <Hyperlink fx:id="linkLogout" onAction="#handleLogoutAction" style="-fx-underline: true;" text="Logout" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

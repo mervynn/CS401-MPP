@@ -1,0 +1,193 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.mum.controller;
+
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import org.mum.context.ApplicationContext;
+import org.mum.model.Movie;
+import org.mum.service.ScheduleService;
+import org.mum.utilities.AlertMaker;
+import org.mum.utilities.Utilities;
+
+/**
+ * FXML Controller class
+ *
+ * @author Mingwei
+ */
+public class SellerScheduleListController implements Initializable {
+
+    @FXML
+    private Button btnMainpage;
+    @FXML
+    private Button btnSchedule;
+    @FXML
+    private Button btnSeats;
+    @FXML
+    private Hyperlink linkChangePin;
+    @FXML
+    private Hyperlink linkLogout;
+    @FXML
+    private VBox vboxMovieSchedule;
+
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        List<Movie> schedule = ScheduleService.getSchedule();
+        vboxMovieSchedule.getChildren().clear();
+        vboxMovieSchedule.getChildren().add(createTimeHBox());
+        vboxMovieSchedule.getChildren().add(createMovieWithScheduleVBox(schedule));
+    }    
+
+    @FXML
+    private void handleChangePINWindowAction(ActionEvent event) {
+        Utilities.openWindow("/org/mum/view/ChangePassword.fxml");
+    }
+
+    @FXML
+    private void handleLogoutAction(ActionEvent event) {
+        ApplicationContext.currentUser = null;
+        Utilities.replaceSceneContentWithNewStage("/org/mum/view/Login.fxml");
+    }
+
+    @FXML
+    private void handleMainpageAction(ActionEvent event) {
+        Utilities.replaceSceneContent("/org/mum/view/seller/Dashboard.fxml");
+    }
+
+    @FXML
+    private void handleScheduleAction(ActionEvent event) {
+        Utilities.replaceSceneContent("/org/mum/view/seller/schedule/List.fxml");
+    }
+
+    @FXML
+    private void handleReleaseAction(ActionEvent event) {
+        Utilities.replaceSceneContent("/org/mum/view/seller/seat/List.fxml");
+    }
+    
+    private HBox createTimeHBox(){
+        HBox h = new HBox();
+        h.setPrefHeight(39);
+        h.setAlignment(Pos.CENTER_LEFT);
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yyyy");
+        Calendar cal = Calendar.getInstance();
+        sdf.format(new Date());
+        for(int i = 0; i < 5;i++){
+            Hyperlink hl = new Hyperlink();
+            cal.add(Calendar.DATE, 1);
+            hl.setText(sdf.format(cal.getTime()));
+            hl.setUnderline(true);
+            hl.setOnMouseClicked(new EventHandler(){
+                @Override
+                public void handle(Event event) {
+                    AlertMaker.showMessage("TODO");
+                }
+            });
+            h.getChildren().add(hl);
+        }
+        
+        return h;
+    }
+    
+    private VBox createMovieWithScheduleVBox(List<Movie> list){
+        VBox v = new VBox();
+        for(Movie m : list){
+            HBox schedule = new HBox();
+            schedule.setPrefHeight(162);
+            
+            VBox imgV = new VBox();
+            ImageView iv = new ImageView(m.getImageUrl());
+            iv.setPreserveRatio(true);
+            iv.setFitHeight(150);
+            imgV.getChildren().add(iv);
+            schedule.getChildren().add(imgV);
+            
+            VBox detailV = new VBox();
+            
+            HBox titleH = new HBox();
+            Label titleLab = new Label();
+            titleLab.setText(m.getTitle());
+            titleLab.setFont(Font.font("Arial Black", FontWeight.BOLD, 20));
+            titleH.setPrefHeight(15);
+            titleH.getChildren().add(titleLab);
+            detailV.getChildren().add(titleH);
+            
+            HBox durH = new HBox();
+            durH.setPrefHeight(20);
+            Label durLab = new Label();
+            durLab.setText(m.getDuration() + " Minutes");
+            durH.getChildren().add(durLab);
+            detailV.getChildren().add(durH);
+            
+            HBox desH = new HBox();
+            desH.setPrefHeight(70);
+            Label desLab = new Label();
+            desLab.setText(m.getDescription());
+            desLab.setWrapText(true);
+            desH.getChildren().add(desLab);
+            detailV.getChildren().add(desH);
+            
+            HBox timeH = new HBox();
+            timeH.setBorder(new Border(new BorderStroke(Color.GREY, 
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                    
+            HBox timeSel = new HBox();
+            timeSel.setAlignment(Pos.CENTER_LEFT);
+            Label timeLab = new Label();
+            timeLab.setText("Select time");
+            timeSel.getChildren().add(timeLab);
+            timeH.getChildren().add(timeSel);
+            
+            HBox timeLinkH = new HBox();
+            for(String time : m.getSchedules()){
+                Hyperlink timeLink = new Hyperlink();
+                timeLink.setText(time);
+                timeLinkH.getChildren().add(timeLink);
+                timeLink.setOnMouseClicked(new EventHandler(){
+                    @Override
+                    public void handle(Event event) {
+                        AlertMaker.showMessage(((Hyperlink) event.getSource()).getText());
+                    }
+                });
+            }
+            timeH.getChildren().add(timeLinkH);
+            
+            detailV.getChildren().add(timeH);
+            
+            schedule.getChildren().add(detailV);
+            
+            v.getChildren().add(schedule);
+        }
+        return v;
+    }
+
+}
