@@ -80,6 +80,16 @@ public class UserService {
         return res;
     }
     
+    public static String changePassword(User user){
+        for(User m : USER){
+            if(m.getId().equals(user.getId())){
+                m.setPassword(user.getPassword());
+                break;
+            }
+        }
+        return "Updated successfully";
+    }
+    
     public static String hash(String plain) {
 		
 		byte[] bytesOfMessage;

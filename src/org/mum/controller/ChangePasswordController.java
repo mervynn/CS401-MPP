@@ -11,9 +11,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.mum.context.ApplicationContext;
+import org.mum.model.User;
+import org.mum.service.UserService;
 import org.mum.utilities.AlertMaker;
 
 /**
@@ -29,6 +32,10 @@ public class ChangePasswordController implements Initializable {
     private Button btnSave;
     @FXML
     private Button btnCancel;
+    @FXML
+    private PasswordField txtOldPassword;
+    @FXML
+    private PasswordField txtNewPassword;
 
     /**
      * Initializes the controller class.
@@ -40,7 +47,20 @@ public class ChangePasswordController implements Initializable {
 
     @FXML
     private void handleSaveAction(ActionEvent event) {
-        AlertMaker.showMessage("TODO");
+        if(!this.txtOldPassword.getText().equals(ApplicationContext.currentUser.getPassword())){
+            AlertMaker.showMessage("Old password is incorrect");
+            return;
+        }
+        if(this.txtOldPassword.getText().equals(this.txtNewPassword.getText())){
+            AlertMaker.showMessage("New password can not be same with old password");
+            return;
+        }
+        User u = new User();
+        u.setId(ApplicationContext.currentUser.getId());
+        u.setPassword(this.txtNewPassword.getText());
+        AlertMaker.showMessage(UserService.changePassword(u));
+        ApplicationContext.currentUser.setPassword(this.txtNewPassword.getText());
+        ((Stage) txtUsername.getScene().getWindow()).close();
     }
 
     @FXML
