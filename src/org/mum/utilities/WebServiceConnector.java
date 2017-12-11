@@ -31,7 +31,7 @@ public class WebServiceConnector {
 
    public static final String URL_PREFIX = "http://localhost:8080/cinema/";
 
-    public <Req, Res> Res callWebService(HTTP_METHOD httpMethod,
+    public static <Req, Res> Res callWebService(HTTP_METHOD httpMethod,
             String uri, //name of REST API after server url prefix.
             Req req, //request body. i.e. in createUser, req should be a User object to be saved
             Class<Res> resType) { //class type expected from response
@@ -144,11 +144,13 @@ public class WebServiceConnector {
 		
 		//--------------- Test add user -------------------
 		User u = new User();
-		u.setFirstName("Someoneelse");
-		u.setLastName("Hello");
-		u.setUsername("world");
+		u.setFirstName("PPP");
+		u.setLastName("MMM");
+		u.setUsername("admin");
                 u.setRoleType("1");
-		u.setPassword(UserService.hash("Very$ecure"));
+                String psw = UserService.hash("admin");
+                System.out.println(psw);
+		u.setPassword(psw);
 		
 		connector.createUser(u);
 		

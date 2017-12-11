@@ -16,16 +16,20 @@ public class Schedule {
     private String date;
     private String time;
     private String movieId;
+    private String movieTitle;
     private String templateId;
+    private String templateName;
     private String dateTime;
     private List<SectionPrice> sectionPrices;
     public Schedule() {}
-    public Schedule(String id, String date, String time, String movieId, String templateId, List<SectionPrice> sectionPrices){
+    public Schedule(String id, String date, String time, String movieId, String movieTitle, String templateId, String templateName, List<SectionPrice> sectionPrices){
         this.id = id;
         this.date = date;
         this.time = time;
         this.movieId = movieId;
+        this.movieTitle = movieTitle;
         this.templateId = templateId;
+        this.templateName = templateName;
         this.sectionPrices = sectionPrices;
     }
 
@@ -83,6 +87,22 @@ public class Schedule {
 
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
+    }
+
+    public String getMovieTitle() {
+        return movieTitle;
+    }
+
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(String templatename) {
+        this.templateName = templatename;
     }
     
 }

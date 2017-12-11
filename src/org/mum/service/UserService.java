@@ -10,7 +10,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import org.mum.model.User;
+import org.mum.utilities.WebServiceConnector;
+import org.mum.utilities.WebServiceConnector.HTTP_METHOD;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 /**
  *
@@ -27,14 +34,25 @@ public class UserService {
         }
     }
     public static User getUserByUserNameAndPassword(String username, String password){
-        for(User u : USER){
-            if(username.equals(u.getUsername())){
-                if(password.equals(u.getPassword()))
-                    return u;
-                break;
-            }
-        }
-        return null;
+//        User user = USER.get(username);
+//        if(user != null && password.equals(user.getPassword()))
+//            return user;
+//        return null;
+
+        //Request header
+        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        //Request body. with multiple values
+        MultiValueMap<String, Object> map= new LinkedMultiValueMap<String, Object>();
+        map.add("username", username);
+        String psw = UserService.hash(password);
+        map.add("password", psw);
+
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(map, headers);
+
+        User user = WebServiceConnector.callWebService(HTTP_METHOD.POST, "authenticate", request, User.class);
+        return user;
     }
     
     public static List<User> getUserList(){
@@ -92,21 +110,30 @@ public class UserService {
     
     public static String hash(String plain) {
 		
-		byte[] bytesOfMessage;
-		MessageDigest md;
-		byte[] thedigest = null;
-		
-		try {
-			bytesOfMessage = plain.getBytes("UTF-8");
-			md = MessageDigest.getInstance("MD5");
-			thedigest = md.digest(bytesOfMessage);
-			
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		
-		return thedigest.toString();
+        byte[] bytesOfMessage;
+        MessageDigest md;
+        byte[] thedigest = null;
+
+        try {
+                bytesOfMessage = plain.getBytes("UTF-8");
+                md = MessageDigest.getInstance("MD5");
+                thedigest = md.digest(bytesOfMessage);
+
+        } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+        }
+        
+        StringBuilder hexString = new StringBuilder();
+        for (byte aMessageDigest : thedigest) {
+            String h = Integer.toHexString(0xFF & aMessageDigest);
+            while (h.length() < 2)
+                h = "0" + h;
+            hexString.append(h);
+        }
+        return hexString.toString().toUpperCase(Locale.US);
+
+       // return thedigest.toString();
 	}
 }

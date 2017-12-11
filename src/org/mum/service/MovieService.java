@@ -6,8 +6,11 @@
 package org.mum.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.mum.model.Movie;
+import org.mum.utilities.WebServiceConnector;
+import org.mum.utilities.WebServiceConnector.HTTP_METHOD;
 
 /**
  *
@@ -45,35 +48,36 @@ public class MovieService {
         MOVIE.add(m2);
     }
     public static List<Movie> getMovieList(){
-        return MOVIE;
+        Movie[] movie = WebServiceConnector.callWebService(HTTP_METHOD.GET, "movie", null, Movie[].class);
+        return Arrays.asList(movie);
     }
     
     public static String addMovie(Movie movie){
-        MOVIE.add(movie);
-        return "Added successfully";
+//        MOVIE.add(movie);
+        return WebServiceConnector.callWebService(HTTP_METHOD.POST, "movie", movie, String.class);
     }
     
     public static String updateMovie(Movie movie){
-        int i = 0;
-        for(Movie m : MOVIE){
-            if(m.getId().equals(movie.getId()))
-                break;
-            i++;
-        }
-        MOVIE.remove(i);
-        MOVIE.add(movie);
-        return "Updated successfully";
+//        int i = 0;
+//        for(Movie m : MOVIE){
+//            if(m.getId().equals(movie.getId()))
+//                break;
+//            i++;
+//        }
+//        MOVIE.remove(i);
+//        MOVIE.add(movie);
+        return WebServiceConnector.callWebService(HTTP_METHOD.PUT, "movie/" + movie.getId(), movie, String.class);
     }
     
     public static String deleteMovie(Movie movie){
-        int i = 0;
-        for(Movie m : MOVIE){
-            if(m.getId().equals(movie.getId()))
-                break;
-            i++;
-        }
-        MOVIE.remove(i);
-        return "Deleted successfully";
+//        int i = 0;
+//        for(Movie m : MOVIE){
+//            if(m.getId().equals(movie.getId()))
+//                break;
+//            i++;
+//        }
+//        MOVIE.remove(i);
+        return WebServiceConnector.callWebService(HTTP_METHOD.DELETE, "movie/" + movie.getId(), null, String.class);
     }
     
     public static List<Movie> fuzzyQuery(String keyword){
