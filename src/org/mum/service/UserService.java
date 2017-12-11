@@ -5,6 +5,9 @@
  */
 package org.mum.service;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import org.mum.model.User;
@@ -36,4 +39,24 @@ public class UserService {
             return user;
         return null;
     }
+    
+    public static String hash(String plain) {
+		
+		byte[] bytesOfMessage;
+		MessageDigest md;
+		byte[] thedigest = null;
+		
+		try {
+			bytesOfMessage = plain.getBytes("UTF-8");
+			md = MessageDigest.getInstance("MD5");
+			thedigest = md.digest(bytesOfMessage);
+			
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		
+		return thedigest.toString();
+	}
 }
