@@ -6,10 +6,13 @@
 package org.mum.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.mum.model.Movie;
 import org.mum.model.Schedule;
 import org.mum.model.SectionPrice;
+import org.mum.utilities.WebServiceConnector;
+import org.mum.utilities.WebServiceConnector.HTTP_METHOD;
 
 /**
  *
@@ -23,19 +26,22 @@ public class ScheduleService {
         spl.add(new SectionPrice("section2", 25d));
         spl.add(new SectionPrice("section3", 15d));
         for(int i = 0; i < 6; i++)
-            SCHEDULES.add(new Schedule(String.valueOf(i), "DEC-10-2017", String.valueOf(i) + ":00", String.valueOf(i), String.valueOf(i), spl));
+            SCHEDULES.add(new Schedule(String.valueOf(i), "DEC-10-2017", String.valueOf(i) + ":00", String.valueOf(i), "", String.valueOf(i), "",  spl));
     }
     
     // happens on load admin schedule list
     public static List<Schedule> getScheduleWithSectionPrice(){
-        return SCHEDULES;
+        Schedule[] schedule = WebServiceConnector.callWebService(HTTP_METHOD.GET, "schedule", null, Schedule[].class);
+        return Arrays.asList(schedule);
     }
     
     public static List<Movie> getMovieWithSchedule(String date){
-        for(int i = 0; i < MovieService.MOVIE.size(); i++){
-            MovieService.MOVIE.get(i).setSchedules(SCHEDULES);
-        }
-        return MovieService.MOVIE;
+//        for(int i = 0; i < MovieService.MOVIE.size(); i++){
+//            MovieService.MOVIE.get(i).setSchedules(SCHEDULES);
+//        }
+//        return MovieService.MOVIE;
+        Movie[] movie = WebServiceConnector.callWebService(HTTP_METHOD.GET, "moviewithschedule/" + date, null, Movie[].class);
+        return Arrays.asList(movie);
     }
     
     public static String addSchedule(Schedule schedule){

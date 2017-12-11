@@ -6,8 +6,11 @@
 package org.mum.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.mum.model.SectionTemplate;
+import org.mum.utilities.WebServiceConnector;
+import org.mum.utilities.WebServiceConnector.HTTP_METHOD;
 
 /**
  *
@@ -34,10 +37,13 @@ public class SectionTemplateService {
     
     // used for adding a new schedule when selecting a template
     public static List<SectionTemplate> getSectionsByTemplateId(String templateId){
-        List<SectionTemplate> sections = new ArrayList<>();
-        for(SectionTemplate st : SECTION_TEMPLATES)
-            if(templateId.equals(st.getLayoutTemplateId()))
-                sections.add(st);
-        return sections;
+//        List<SectionTemplate> sections = new ArrayList<>();
+//        for(SectionTemplate st : SECTION_TEMPLATES)
+//            if(templateId.equals(st.getLayoutTemplateId()))
+//                sections.add(st);
+//        return sections;
+
+        SectionTemplate[] layouts = WebServiceConnector.callWebService(HTTP_METHOD.GET, "sectiontemplatebylayoutid/" + templateId, null, SectionTemplate[].class);
+        return Arrays.asList(layouts);
     }
 }

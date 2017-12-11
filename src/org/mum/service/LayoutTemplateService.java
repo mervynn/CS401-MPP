@@ -6,8 +6,12 @@
 package org.mum.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.mum.model.LayoutTemplate;
+import org.mum.model.Movie;
+import org.mum.utilities.WebServiceConnector;
+import org.mum.utilities.WebServiceConnector.HTTP_METHOD;
 
 /**
  *
@@ -24,6 +28,7 @@ public class LayoutTemplateService {
     }
     
     public static List<LayoutTemplate> getLayoutTemplateList(){
-        return TEMPLATE;
+        LayoutTemplate[] layouts = WebServiceConnector.callWebService(HTTP_METHOD.GET, "layouttemplate", null, LayoutTemplate[].class);
+        return Arrays.asList(layouts);
     }
 }

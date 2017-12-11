@@ -88,8 +88,8 @@ public class AdminScheduleListController implements Initializable {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
-        colMovie.setCellValueFactory(new PropertyValueFactory<>("movieId"));
-        colHall.setCellValueFactory(new PropertyValueFactory<>("templateId"));
+        colMovie.setCellValueFactory(new PropertyValueFactory<>("movieTitle"));
+        colHall.setCellValueFactory(new PropertyValueFactory<>("templateName"));
     }
     
     public void loadDate(){
