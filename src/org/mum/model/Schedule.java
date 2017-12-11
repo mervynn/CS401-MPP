@@ -15,15 +15,17 @@ public class Schedule {
     private String id;
     private String date;
     private String time;
-    private String movie;
-    private String hall;
+    private String movieId;
+    private String templateId;
+    private String dateTime;
     private List<SectionPrice> sectionPrices;
-    public Schedule(String id, String date, String time, String movie, String hall, List<SectionPrice> sectionPrices){
+    public Schedule() {}
+    public Schedule(String id, String date, String time, String movieId, String templateId, List<SectionPrice> sectionPrices){
         this.id = id;
         this.date = date;
         this.time = time;
-        this.movie = movie;
-        this.hall = hall;
+        this.movieId = movieId;
+        this.templateId = templateId;
         this.sectionPrices = sectionPrices;
     }
 
@@ -51,20 +53,12 @@ public class Schedule {
         this.time = time;
     }
 
-    public String getMovie() {
-        return movie;
+    public String getMovieId() {
+        return movieId;
     }
 
-    public void setMovie(String movie) {
-        this.movie = movie;
-    }
-
-    public String getHall() {
-        return hall;
-    }
-
-    public void setHall(String hall) {
-        this.hall = hall;
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
     }
 
     public List<SectionPrice> getSectionPrices() {
@@ -73,6 +67,22 @@ public class Schedule {
 
     public void setSectionPrices(List<SectionPrice> sectionPrices) {
         this.sectionPrices = sectionPrices;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
     
 }

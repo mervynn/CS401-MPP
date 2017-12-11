@@ -11,10 +11,12 @@ package org.mum.model;
  */
 public class SectionPrice {
     private String id;
-    private String section;
+    private String sectionId;
+    private String sectionName;
     private Double price;
+    public SectionPrice(){}
     public SectionPrice(String sectionName, Double price){
-        this.section = sectionName;
+        this.sectionName = sectionName;
         this.price = price;
     }
 
@@ -26,13 +28,22 @@ public class SectionPrice {
         this.id = id;
     }
 
-    public String getSection() {
-        return section;
+    public String getSectionId() {
+        return sectionId;
     }
 
-    public void setSection(String section) {
-        this.section = section;
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
     }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
+    }
+
 
     public Double getPrice() {
         return price;

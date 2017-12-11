@@ -23,12 +23,14 @@ public class ScheduleService {
         spl.add(new SectionPrice("section2", 25d));
         spl.add(new SectionPrice("section3", 15d));
         for(int i = 0; i < 6; i++)
-            SCHEDULES.add(new Schedule(String.valueOf(i), "DEC-10-2017", String.valueOf(i) + ":00", "AVATAR" + i, "hall" + i, spl));
+            SCHEDULES.add(new Schedule(String.valueOf(i), "DEC-10-2017", String.valueOf(i) + ":00", String.valueOf(i), String.valueOf(i), spl));
     }
     
+    // happens on load admin schedule list
     public static List<Schedule> getScheduleWithSectionPrice(){
         return SCHEDULES;
     }
+    
     public static List<Movie> getMovieWithSchedule(String date){
         for(int i = 0; i < MovieService.MOVIE.size(); i++){
             MovieService.MOVIE.get(i).setSchedules(SCHEDULES);
@@ -67,8 +69,8 @@ public class ScheduleService {
     public static List<Schedule> fuzzyQuery(String keyword){
         List<Schedule> res = new ArrayList<Schedule>();
         for(Schedule m : SCHEDULES)
-            if(m.getDate().contains(keyword) || m.getTime().contains(keyword)|| m.getMovie().contains(keyword)
-                    || m.getHall().contains(keyword)|| m.getId().contains(keyword))
+            if(m.getDate().contains(keyword) || m.getTime().contains(keyword)|| m.getMovieId().contains(keyword)
+                    || m.getTemplateId().contains(keyword)|| m.getId().contains(keyword))
                 res.add(m);
         return res;
     }

@@ -88,8 +88,8 @@ public class AdminScheduleListController implements Initializable {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
-        colMovie.setCellValueFactory(new PropertyValueFactory<>("movie"));
-        colHall.setCellValueFactory(new PropertyValueFactory<>("hall"));
+        colMovie.setCellValueFactory(new PropertyValueFactory<>("movieId"));
+        colHall.setCellValueFactory(new PropertyValueFactory<>("templateId"));
     }
     
     public void loadDate(){
@@ -156,12 +156,12 @@ public class AdminScheduleListController implements Initializable {
 
     @FXML
     private void handleEditAction(ActionEvent event) {
-        Schedule m = this.tableVSchedule.getSelectionModel().getSelectedItem();
-        if(m == null){
+        Schedule s = this.tableVSchedule.getSelectionModel().getSelectedItem();
+        if(s == null){
             AlertMaker.showMessage("Please select a schedule for edit");
             return;
         }
-        ApplicationContext.stage.setUserData(m);
+        ApplicationContext.stage.setUserData(s);
         ApplicationContext.stage.getScene().setUserData(this);
         Utilities.openWindow("/org/mum/view/admin/schedule/Modify.fxml");
     }

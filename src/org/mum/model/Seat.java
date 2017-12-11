@@ -15,6 +15,7 @@ public class Seat {
     private String columnNum;
     private String status;
     private String price;
+    public Seat(){}
     public Seat(String rowNum, String columnNum, String status, String price){
         this.rowNum = rowNum;
         this.columnNum = columnNum;
