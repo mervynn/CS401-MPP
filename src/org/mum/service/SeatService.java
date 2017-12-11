@@ -96,6 +96,17 @@ public class SeatService {
         return "Deleted successfully";
     }
     
+    public static String submitSeats(List<Seat> seatP){
+        for(Seat m : seats){
+            for(Seat s : seatP){
+                if(m.getId().equals(s.getId())){
+                    m.setStatus(s.getStatus());
+                }
+            }
+        }
+        return "Seat selection successfully";
+    }
+    
     public static List<Seat> fuzzyQuery(String keyword){
         List<Seat> res = new ArrayList<Seat>();
         for(Seat m : seats)

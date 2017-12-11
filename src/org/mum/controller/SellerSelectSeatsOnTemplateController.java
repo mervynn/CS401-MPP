@@ -6,6 +6,7 @@
 package org.mum.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.layout.VBox;
 import org.mum.context.ApplicationContext;
 import org.mum.model.Seat;
 import org.mum.service.SeatService;
+import org.mum.utilities.AlertMaker;
 import org.mum.utilities.Constant;
 import org.mum.utilities.Utilities;
 
@@ -59,7 +61,7 @@ public class SellerSelectSeatsOnTemplateController implements Initializable {
     @FXML
     private Button btnCancel;
     @FXML
-    private Button btnContinue;
+    private Button btnSubmit;
 
     /**
      * Initializes the controller class.
@@ -100,9 +102,6 @@ public class SellerSelectSeatsOnTemplateController implements Initializable {
         Utilities.replaceSceneContent("/org/mum/view/seller/schedule/List.fxml");
     }
 
-    @FXML
-    private void handleContinueAction(ActionEvent event) {
-    }
     
     private void createSeatsLayoutAndOccupied(){
         String[] preData = (String[])ApplicationContext.stage.getUserData();
@@ -176,6 +175,22 @@ public class SellerSelectSeatsOnTemplateController implements Initializable {
             return "-fx-background-color: red";
         else
             return "-fx-background-color: #ee7600";
+    }
+
+    @FXML
+    private void handleSubmitAction(ActionEvent event) {
+        if(Double.valueOf(this.labAmount.getText()) == 0 || Integer.valueOf(this.labQuanlity.getText()) == 0){
+            AlertMaker.showMessage("Please select a seat");
+            return;
+        }
+        if(Double.valueOf(this.labAmount.getText()) < 0 || Integer.valueOf(this.labQuanlity.getText()) < 0){
+            AlertMaker.showMessage("Please make sure unlock your locked data before submit");
+            return;
+        }
+        List<Seat> seatsSelected = new ArrayList<>();
+        AlertMaker.showMessage(SeatService.submitSeats(seatsSelected));
+        Utilities.replaceSceneContent("/org/mum/view/seller/schedule/List.fxml");
+        
     }
 
 }

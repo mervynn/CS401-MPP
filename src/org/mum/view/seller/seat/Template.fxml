@@ -75,7 +75,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="222.0">
                                        <children>
-                                          <Label fx:id="labDuration" style="-fx-font-weight: Strong;" />
+                                          <Label fx:id="labDuration" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -125,7 +125,7 @@
                   <HBox alignment="CENTER" prefHeight="47.0" prefWidth="889.0">
                      <children>
                         <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#handleCancelAction" text="Cancel" />
-                        <Button fx:id="btnContinue" mnemonicParsing="false" onAction="#handleContinueAction" text="Confirm">
+                        <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#handleSubmitAction" text="Submit">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
