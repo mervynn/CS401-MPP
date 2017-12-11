@@ -19,6 +19,25 @@ public class Movie {
     private String imageUrl;
     private String duration;
     private List<Schedule> schedules;
+    public Movie(){}
+    public Movie(String id, String title){
+        this.id = id;
+        this.title = title;
+    }
+    @Override
+    public String toString(){
+        return title;
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        if(this.id == null || obj == null) return false;
+        return this.id.equals(((Movie)obj).getId());
+    }
+    
+    public String getKey(){
+        return id;
+    }
 
     public String getId() {
         return id;

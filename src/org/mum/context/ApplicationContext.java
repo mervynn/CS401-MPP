@@ -6,7 +6,6 @@
 package org.mum.context;
 
 import javafx.stage.Stage;
-import org.mum.Main;
 import org.mum.model.User;
 
 /**

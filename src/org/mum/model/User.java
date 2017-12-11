@@ -17,6 +17,17 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    
+    public User(){}
+    public User(String id, String username, String password, String roleType, String firstName, String lastName, String email){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.roleType = roleType;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     public String getId() {
         return id;
@@ -72,6 +83,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setUserId(String snow) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setPhone(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

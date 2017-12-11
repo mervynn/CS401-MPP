@@ -23,7 +23,48 @@
             </HBox>
          </bottom>
          <center>
-            <VBox centerShape="false" prefHeight="290.0" prefWidth="485.0" style="-fx-border-color: #c8c8c8;" />
+            <VBox centerShape="false" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #c8c8c8;">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="487.0">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="917.0">
+                           <children>
+                              <TextField fx:id="txtSearch">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#handleSearchAction" text="Search" />
+                              <Button fx:id="btnAddWindow" mnemonicParsing="false" onAction="#handleAddWindowAction" text="+ Add User">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin></Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tableVUser" prefHeight="432.0" prefWidth="889.0">
+                     <columns>
+                        <TableColumn fx:id="colId" prefWidth="89.0" text="Id" />
+                        <TableColumn fx:id="colUsername" prefWidth="96.0" text="Username" />
+                        <TableColumn fx:id="colRoleType" prefWidth="111.0" text="Role Type" />
+                        <TableColumn fx:id="colFirstName" prefWidth="155.0" text="First Name" />
+                        <TableColumn fx:id="colLastName" prefWidth="125.0" text="Last Name" />
+                        <TableColumn fx:id="colEmail" prefWidth="312.0" text="Email" />
+                     </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                              <MenuItem fx:id="btnRefresh" mnemonicParsing="false" onAction="#handleRefreshAction" text="Refresh" />
+                            <MenuItem fx:id="btnEdit" mnemonicParsing="false" onAction="#handleEditAction" text="Edit" />
+                              <MenuItem fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDeleteAction" text="Delete" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </TableView>
+                  <Pagination prefHeight="46.0" prefWidth="487.0" />
+               </children>
+            </VBox>
          </center>
          <left>
             <VBox prefHeight="290.0" prefWidth="109.0" BorderPane.alignment="CENTER">

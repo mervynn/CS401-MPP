@@ -8,8 +8,8 @@ package org.mum.service;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import org.mum.model.User;
 
 /**
@@ -18,26 +18,66 @@ import org.mum.model.User;
  */
 public class UserService {
     
-    static Map<String, User> USER = new HashMap<String, User>();
+    static List<User> USER = new ArrayList<>();
     static {
-        User admin = new User();
-        User seller = new User();
-        admin.setUsername("admin");
-        admin.setPassword("123");
-        admin.setRoleType("0");
-        admin.setFirstName("Admin");
-        seller.setUsername("seller");
-        seller.setPassword("123");
-        seller.setRoleType("1");
-        seller.setFirstName("Seller");
-        USER.put("admin", admin);
-        USER.put("seller", seller);
+        USER.add(new User("0", "admin", "123", "0", "first", "last", "email"));
+        USER.add(new User("1", "seller", "123", "1", "", "", ""));
+        for(int i = 2; i < 20; i++){
+            USER.add(new User(String.valueOf(i), "seller" + String.valueOf(i - 1), "123", "1", "", "", ""));
+        }
     }
     public static User getUserByUserNameAndPassword(String username, String password){
-        User user = USER.get(username);
-        if(user != null && password.equals(user.getPassword()))
-            return user;
+        for(User u : USER){
+            if(username.equals(u.getUsername())){
+                if(password.equals(u.getPassword()))
+                    return u;
+                break;
+            }
+        }
         return null;
+    }
+    
+    public static List<User> getUserList(){
+        return USER;
+    }
+    
+    public static String addUser(User user){
+        USER.add(user);
+        return "Added successfully";
+    }
+    
+    public static String updateUser(User user){
+        int i = 0;
+        for(User m : USER){
+            if(m.getId().equals(user.getId())){
+                break;
+            }
+            i++;
+        }
+        USER.remove(i);
+        USER.add(user);
+        return "Updated successfully";
+    }
+    
+    public static String deleteUser(User user){
+        int i = 0;
+        for(User m : USER){
+            if(m.getId().equals(user.getId()))
+                break;
+            i++;
+        }
+        USER.remove(i);
+        return "Deleted successfully";
+    }
+    
+    public static List<User> fuzzyQuery(String keyword){
+        List<User> res = new ArrayList<User>();
+        for(User m : USER)
+            if(m.getId().contains(keyword) || m.getUsername().contains(keyword) 
+                || m.getFirstName().contains(keyword) || m.getLastName().contains(keyword)
+                || m.getRoleType().contains(keyword) || m.getEmail().contains(keyword))
+                res.add(m);
+        return res;
     }
     
     public static String hash(String plain) {

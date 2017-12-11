@@ -19,6 +19,15 @@ public class LayoutTemplate {
         this.id = id;
         this.name = name;
     }
+    
+    @Override
+    public String toString(){
+        return name;
+    }
+    
+    public String getKey(){
+        return id;
+    }
 
     public String getId() {
         return id;

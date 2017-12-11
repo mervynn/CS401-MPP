@@ -10,17 +10,26 @@ package org.mum.model;
  * @author Mingwei
  */
 public class Seat {
+    // this is occupied seat's primary key
     private String id;
     private String rowNum;
     private String columnNum;
     private String status;
     private String price;
+    // these date use to show
+    private String movieTitle;
+    private String date;
+    private String time;
     public Seat(){}
-    public Seat(String rowNum, String columnNum, String status, String price){
+    public Seat(String id, String rowNum, String columnNum, String status, String price, String movieTitle, String date, String time){
+        this.id = id;
         this.rowNum = rowNum;
         this.columnNum = columnNum;
         this.status = status;
         this.price = price;
+        this.movieTitle = movieTitle;
+        this.date = date;
+        this.time = time;
     }
     public String getId() {
         return id;
@@ -61,5 +70,29 @@ public class Seat {
     public void setPrice(String price) {
         this.price = price;
     }
-    
+
+    public String getMovieTitle() {
+        return movieTitle;
+    }
+
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
 }
