@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -188,7 +189,19 @@ public class SellerSelectSeatsOnTemplateController implements Initializable {
             return;
         }
         List<Seat> seatsSelected = new ArrayList<>();
-        AlertMaker.showMessage(SeatService.submitSeats(seatsSelected));
+        List<Node> vv = this.vboxSeat.getChildren();
+        for(int i = 1; i < vv.size(); i++){
+            for(Node node : ((HBox) vv.get(i)).getChildren()){
+                Button curBtn = (Button) node;
+                Seat curSeat = (Seat) curBtn.getUserData();
+                if(Constant.SEATSTATUS_LOCKED_BYME.equals(curSeat.getStatus())){
+                    seatsSelected.add(curSeat);
+                }
+            }
+        }
+        if(AlertMaker.confirm("Are you sure to submit these selected seats?\n" + seatsSelected.toString())){
+            AlertMaker.showMessage(SeatService.submitSeats(seatsSelected));
+        }
         Utilities.replaceSceneContent("/org/mum/view/seller/schedule/List.fxml");
         
     }
