@@ -189,7 +189,8 @@ public class SellerScheduleListController implements Initializable {
                             hboxTimeSchedule.getUserData().toString(),
                             curLink.getText(),
                             m.getDuration(),
-                            curLink.getId()
+                            s.getId()
+//                            curLink.getId()
                         });
                         Utilities.replaceSceneContent("/org/mum/view/seller/seat/Template.fxml");
                     }

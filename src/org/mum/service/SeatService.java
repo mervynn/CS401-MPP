@@ -6,9 +6,12 @@
 package org.mum.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.mum.model.Seat;
 import org.mum.utilities.Constant;
+import org.mum.utilities.WebServiceConnector;
+import org.mum.utilities.WebServiceConnector.HTTP_METHOD;
 
 /**
  *
@@ -45,6 +48,9 @@ public class SeatService {
 
     }
     public static List<Seat> getSeatListByScheduleId(String scheduleId){
+        Seat[] seatAry = WebServiceConnector.callWebService(HTTP_METHOD.GET, "seatsByScheduleId/" + scheduleId, null, Seat[].class);
+        seats = Arrays.asList(seatAry);
+        
         seats.sort((Object o1, Object o2) -> {
             Seat s1 = (Seat) o1;
             Seat s2 = (Seat) o2;
