@@ -8,6 +8,8 @@ package org.mum.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.mum.context.ApplicationContext;
+import org.mum.model.OrderReqDto;
 import org.mum.model.Seat;
 import org.mum.utilities.Constant;
 import org.mum.utilities.WebServiceConnector;
@@ -110,7 +112,14 @@ public class SeatService {
                 }
             }
         }
-        return "Seat selection successfully";
+        
+        OrderReqDto orderReq = new OrderReqDto();
+        orderReq.setUserId(ApplicationContext.currentUser.getId());
+        orderReq.setSeatList(seatP); 
+        
+        String msg = WebServiceConnector.callWebService(HTTP_METHOD.POST, "orderTickets", orderReq, String.class);
+        
+        return msg;
     }
     
     public static List<Seat> fuzzyQuery(String keyword){
