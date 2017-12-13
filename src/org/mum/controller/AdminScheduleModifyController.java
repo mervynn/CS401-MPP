@@ -7,23 +7,21 @@ package org.mum.controller;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
-import static javafx.scene.input.KeyCode.T;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,6 +29,7 @@ import org.mum.context.ApplicationContext;
 import org.mum.model.LayoutTemplate;
 import org.mum.model.Movie;
 import org.mum.model.Schedule;
+import org.mum.model.SectionPrice;
 import org.mum.model.SectionTemplate;
 import org.mum.service.LayoutTemplateService;
 import org.mum.service.MovieService;
@@ -60,6 +59,8 @@ public class AdminScheduleModifyController implements Initializable {
     private DatePicker dateTime;
     @FXML
     private VBox vboxSectionPrice;
+    @FXML
+    private VBox vform;
 
     /**
      * Initializes the controller class.
@@ -89,24 +90,25 @@ public class AdminScheduleModifyController implements Initializable {
                     String templateId = String.valueOf(newValue);
                     List<SectionTemplate> sections = SectionTemplateService.getSectionsByTemplateId(templateId);
                     vboxSectionPrice.getChildren().clear();
-                    sections.stream().map((st) -> {
+                    double height = 0;
+                    for(SectionTemplate st : sections){
                         HBox hb = new HBox();
-                        
                         HBox l = new HBox();
                         l.setMinWidth(82);
                         l.setMaxWidth(82);
                         HBox r = new HBox();
-                        hb.setMinHeight(31);
+                        hb.setMinHeight(35);
+                        height += 35;
                         Label lb = new Label(st.getSectionLabel());
                         l.getChildren().add(lb);
                         TextField tf = new TextField();
+                        tf.setUserData(st.getId());
                         r.getChildren().add(tf);
                         hb.getChildren().add(l);
                         hb.getChildren().add(r);
-                        return hb;
-                    }).forEachOrdered((hb) -> {
                         vboxSectionPrice.getChildren().add(hb);
-                    });
+                    }
+                    vform.setMinHeight(height + 260);
                 }
             }
         };
@@ -126,11 +128,30 @@ public class AdminScheduleModifyController implements Initializable {
             this.chbTitle.setDisable(true);
             this.chbTemplate.getSelectionModel().select(new LayoutTemplate(s.getTemplateId(), ""));
             this.chbTemplate.setDisable(true);
+            vboxSectionPrice.getChildren().clear();
+            double height = 0;
+            for(SectionPrice sp : s.getSectionPrices()){
+                HBox hb = new HBox();
+                HBox l = new HBox();
+                l.setMinWidth(82);
+                l.setMaxWidth(82);
+                HBox r = new HBox();
+                hb.setMinHeight(35);
+                height += 35;
+                Label lb = new Label(sp.getSectionName());
+                l.getChildren().add(lb);
+                TextField tf = new TextField(sp.getPrice().toString());
+                tf.setUserData(sp.getId());
+                r.getChildren().add(tf);
+                hb.getChildren().add(l);
+                hb.getChildren().add(r);
+                vboxSectionPrice.getChildren().add(hb);
+            }
+            vform.setMinHeight(height + 260);
         }else{
             chbTitle.getSelectionModel().selectFirst();
         }
     }
-
 
     @FXML
     private void handleSaveAction(ActionEvent event) {
@@ -139,9 +160,29 @@ public class AdminScheduleModifyController implements Initializable {
         schedule.setId(this.hidId.getText());
         schedule.setDate(sdf.format(this.dateTime.getValue()));
         schedule.setTime(sdf.format(this.dateTime.getValue()));
+        List<Node> nodes = vboxSectionPrice.getChildren();
+        List<SectionPrice> sectionPrices = new ArrayList<>();
         if(Constant.PAGETYPE_ADD.equals(ApplicationContext.stage.getUserData())){
+            for(Node node : nodes){
+                TextField tf = (TextField)((HBox) node).getChildren().get(1);
+                SectionPrice sp = new SectionPrice();
+                sp.setPrice(Double.valueOf(tf.getText()));
+                // session_template talbe primary key
+                sp.setSectionId(tf.getUserData().toString());
+                sectionPrices.add(sp);
+            }
+            schedule.setSectionPrices(sectionPrices);
             AlertMaker.showMessage(ScheduleService.addSchedule(schedule));
         }else{
+            for(Node node : nodes){
+                TextField tf = (TextField)((HBox) node).getChildren().get(1);
+                SectionPrice sp = new SectionPrice();
+                sp.setPrice(Double.valueOf(tf.getText()));
+                // session_price talbe primary key
+                sp.setId(tf.getUserData().toString());
+                sectionPrices.add(sp);
+            }
+            schedule.setSectionPrices(sectionPrices);
             AlertMaker.showMessage(ScheduleService.updateSchedule(schedule));
         }
         ((Stage) dateTime.getScene().getWindow()).close();

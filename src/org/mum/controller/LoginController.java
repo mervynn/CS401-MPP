@@ -53,7 +53,13 @@ public class LoginController extends Parent implements Initializable {
 
     @FXML
     private void handleLoginAction(ActionEvent event) {
-        User user = UserService.getUserByUserNameAndPassword(txtUsername.getText(), txtPassword.getText());
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        if("".equals(username) || "".equals(password)){
+            this.labMsg.setText("username or password can not be empty");
+            return;
+        }
+        User user = UserService.getUserByUserNameAndPassword(username, password);
         if(user != null){
             ApplicationContext.currentUser = user;
             if("0".equals(user.getRoleType()))

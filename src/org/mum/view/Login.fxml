@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="205.0" prefWidth="405.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mum.controller.LoginController">
     <children>
-      <VBox layoutX="39.0" layoutY="50.0" prefHeight="117.0" prefWidth="327.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="50.0">
+      <VBox layoutX="39.0" layoutY="50.0" prefHeight="117.0" prefWidth="345.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="50.0">
          <children>
             <HBox alignment="CENTER_LEFT" layoutX="23.0" layoutY="50.0" prefHeight="86.0" prefWidth="310.0">
                <children>
@@ -20,7 +20,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="txtUsername" onKeyPressed="#handleEnterAction" prefHeight="27.0" prefWidth="200.0" text="admin" />
+                        <TextField fx:id="txtUsername" onKeyPressed="#handleEnterAction" prefHeight="27.0" prefWidth="200.0" text="dalsian" />
                      </children>
                   </HBox>
                </children>
@@ -34,7 +34,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <PasswordField fx:id="txtPassword" onKeyPressed="#handleEnterAction" prefHeight="41.0" prefWidth="200.0" text="123">
+                        <PasswordField fx:id="txtPassword" onKeyPressed="#handleEnterAction" prefHeight="41.0" prefWidth="200.0" text="admin">
                            <HBox.margin>
                               <Insets left="1.0" top="10.0" />
                            </HBox.margin>
@@ -45,10 +45,10 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="320.0">
                <children>
-                  <HBox prefHeight="16.0" prefWidth="78.0" />
-                  <HBox prefHeight="16.0" prefWidth="224.0">
+                  <HBox prefHeight="21.0" prefWidth="89.0" />
+                  <HBox prefHeight="21.0" prefWidth="257.0">
                      <children>
-                          <Label fx:id="labMsg" alignment="CENTER" minHeight="16" minWidth="69" prefHeight="16.0" prefWidth="221.0" textFill="#f50000">
+                          <Label fx:id="labMsg" minHeight="16" minWidth="69" prefHeight="16.0" prefWidth="266.0" textFill="#f50000">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin></Label>
