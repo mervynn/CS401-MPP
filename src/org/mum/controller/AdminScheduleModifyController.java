@@ -7,7 +7,11 @@ package org.mum.controller;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +43,8 @@ import org.mum.service.ScheduleService;
 import org.mum.service.SectionTemplateService;
 import org.mum.utilities.AlertMaker;
 import org.mum.utilities.Constant;
+import org.mum.utilities.UtilitiesFactory;
+import org.springframework.util.StringUtils;
 
 /**
  * FXML Controller class
@@ -58,14 +64,13 @@ public class AdminScheduleModifyController implements Initializable {
     @FXML
     private ChoiceBox<LayoutTemplate> chbTemplate;
     @FXML
-    private DatePicker dateTime;
-    @FXML
-    private TextField txtTime;
-    @FXML
     private VBox vboxSectionPrice;
-
     @FXML
     private VBox vform;
+    @FXML
+    private DatePicker txtDate;
+    @FXML
+    private TextField txtTime;
 
     private List<SectionTemplate> sections;
     private Map<Integer, TextField> sectionPriceMap; //Maps <SectionTemplateID, TextField>
@@ -85,15 +90,6 @@ public class AdminScheduleModifyController implements Initializable {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if(chbTitle.getSelectionModel().getSelectedIndex() != -1 && 
                     chbTemplate.getSelectionModel().getSelectedIndex() != -1){
-                    //initSectionPriceByTitleChange();
-                }
-            }
-        };
-        ChangeListener<Number> listener1 = new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if(chbTitle.getSelectionModel().getSelectedIndex() != -1 && 
-                    chbTemplate.getSelectionModel().getSelectedIndex() != -1){
                      //String movieId = this.chbTitle.getValue().getId();
                      
                      chbTemplate.getSelectionModel().select(newValue.intValue());
@@ -107,8 +103,8 @@ public class AdminScheduleModifyController implements Initializable {
                     for(SectionTemplate st : sections){
                         HBox hb = new HBox();
                         HBox l = new HBox();
-                        l.setMinWidth(82);
-                        l.setMaxWidth(82);
+                        l.setMinWidth(74);
+                        l.setMaxWidth(74);
                         HBox r = new HBox();
                         hb.setMinHeight(35);
                         height += 35;
@@ -117,6 +113,7 @@ public class AdminScheduleModifyController implements Initializable {
                         TextField tf = new TextField();
                         sectionPriceMap.put(Integer.parseInt(st.getId()), tf);
                         tf.setUserData(st.getId());
+                        r.getChildren().add(new Label("$"));
                         r.getChildren().add(tf);
                         hb.getChildren().add(l);
                         hb.getChildren().add(r);
@@ -126,8 +123,7 @@ public class AdminScheduleModifyController implements Initializable {
                 }
             }
         };
-        this.chbTitle.getSelectionModel().selectedIndexProperty().addListener(listener);
-        this.chbTemplate.getSelectionModel().selectedIndexProperty().addListener(listener1);
+        this.chbTemplate.getSelectionModel().selectedIndexProperty().addListener(listener);
     }
     
     private void loadDate(){
@@ -147,8 +143,8 @@ public class AdminScheduleModifyController implements Initializable {
             for(SectionPrice sp : s.getSectionPrices()){
                 HBox hb = new HBox();
                 HBox l = new HBox();
-                l.setMinWidth(82);
-                l.setMaxWidth(82);
+                l.setMinWidth(74);
+                l.setMaxWidth(74);
                 HBox r = new HBox();
                 hb.setMinHeight(35);
                 height += 35;
@@ -156,6 +152,7 @@ public class AdminScheduleModifyController implements Initializable {
                 l.getChildren().add(lb);
                 TextField tf = new TextField(sp.getPrice().toString());
                 tf.setUserData(sp.getId());
+                r.getChildren().add(new Label("$"));
                 r.getChildren().add(tf);
                 hb.getChildren().add(l);
                 hb.getChildren().add(r);
@@ -169,38 +166,31 @@ public class AdminScheduleModifyController implements Initializable {
 
     @FXML
     private void handleSaveAction(ActionEvent event) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yyyy");
+        if(!isValidForm()) return;
+        SimpleDateFormat sdf = UtilitiesFactory.getSimpleDateFormatInstance();
         Schedule schedule = new Schedule();
         schedule.setId(this.hidId.getText());
-        schedule.setDate(this.dateTime.getValue().getMonthValue()+ "-" +
-                         this.dateTime.getValue().getDayOfMonth() + "-" +
-                         this.dateTime.getValue().getYear());
-        schedule.setTime(txtTime.getText());
-        schedule.setMovieId(chbTitle.getSelectionModel().getSelectedItem().getId());
-        schedule.setTemplateId(chbTemplate.getSelectionModel().getSelectedItem().getId());
+        LocalDate localDate = this.txtDate.getValue();
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date date = Date.from(instant);
+        schedule.setDate(sdf.format(date));
+        schedule.setTime(this.txtTime.getText());
         List<Node> nodes = vboxSectionPrice.getChildren();
         List<SectionPrice> sectionPrices = new ArrayList<>();
-        for(SectionTemplate secTemp : sections) {
-            SectionPrice sp = new SectionPrice(secTemp.getSectionLabel(), Double.parseDouble(sectionPriceMap.get(Integer.parseInt(secTemp.getId())).getText()));
-            sp.setSectionId(secTemp.getId());
-            sectionPrices.add(sp);
-        }
-        
-        
         if(Constant.PAGETYPE_ADD.equals(ApplicationContext.stage.getUserData())){
-//            for(Node node : nodes){
-//                TextField tf = (TextField)((HBox) node).getChildren().get(1);
-//                SectionPrice sp = new SectionPrice();
-//                sp.setPrice(Double.valueOf(tf.getText()));
-//                // session_template talbe primary key
-//                sp.setSectionId(tf.getUserData().toString());
-//                sectionPrices.add(sp);
-//            }
+            for(Node node : nodes){
+                TextField tf = (TextField)((HBox)((HBox) node).getChildren().get(1)).getChildren().get(1);
+                SectionPrice sp = new SectionPrice();
+                sp.setPrice(Double.valueOf(tf.getText()));
+                // session_template talbe primary key
+                sp.setSectionId(tf.getUserData().toString());
+                sectionPrices.add(sp);
+            }
             schedule.setSectionPrices(sectionPrices);
             AlertMaker.showMessage(ScheduleService.addSchedule(schedule));
         }else{
             for(Node node : nodes){
-                TextField tf = (TextField)((HBox) node).getChildren().get(1);
+                TextField tf = (TextField)((HBox)((HBox) node).getChildren().get(1)).getChildren().get(1);
                 SectionPrice sp = new SectionPrice();
                 sp.setPrice(Double.valueOf(tf.getText()));
                 // session_price talbe primary key
@@ -210,8 +200,26 @@ public class AdminScheduleModifyController implements Initializable {
             schedule.setSectionPrices(sectionPrices);
             AlertMaker.showMessage(ScheduleService.updateSchedule(schedule));
         }
-        ((Stage) dateTime.getScene().getWindow()).close();
-        ((AdminScheduleListController) ApplicationContext.stage.getScene().getUserData()).loadDate();
+        ((Stage) chbTitle.getScene().getWindow()).close();
+        ((AdminMovieListController) ApplicationContext.stage.getScene().getUserData()).loadDate();
+    }
+    
+    private boolean isValidForm(){
+        List<Node> nodes = vboxSectionPrice.getChildren();
+        boolean checkRes = true;
+        for(Node node : nodes){
+            TextField tf = (TextField)((HBox)((HBox) node).getChildren().get(1)).getChildren().get(1);
+            if("".equals(tf.getText())){
+                checkRes = false;
+                break;
+            }
+        }
+        if(!checkRes || this.txtDate.getValue() == null || StringUtils.isEmpty(this.txtTime.getText())){
+            AlertMaker.showMessage("please make sure all input intems aren't empty");
+            return false;
+        }
+        
+        return true;
     }
 
     @FXML

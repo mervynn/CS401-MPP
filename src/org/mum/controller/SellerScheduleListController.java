@@ -38,6 +38,7 @@ import org.mum.model.Movie;
 import org.mum.model.Schedule;
 import org.mum.service.ScheduleService;
 import org.mum.utilities.Utilities;
+import org.mum.utilities.UtilitiesFactory;
 
 /**
  * FXML Controller class
@@ -69,7 +70,8 @@ public class SellerScheduleListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         createTimeHBox();
-        String today = new SimpleDateFormat("MMM-dd-yyyy").format(new Date());
+        SimpleDateFormat sdf = UtilitiesFactory.getSimpleDateFormatInstance();
+        String today = sdf.format(new Date());
         hboxTimeSchedule.setUserData(today);
         createMovieWithScheduleVBox(today);
     }    
@@ -102,7 +104,7 @@ public class SellerScheduleListController implements Initializable {
     
     private void createTimeHBox(){
         hboxTimeSchedule.getChildren().clear();
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yyyy");
+        SimpleDateFormat sdf = UtilitiesFactory.getSimpleDateFormatInstance();
         Calendar cal = Calendar.getInstance();
         sdf.format(new Date());
         for(int i = 0; i < 5;i++){
