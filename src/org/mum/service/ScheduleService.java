@@ -45,8 +45,10 @@ public class ScheduleService {
     }
     
     public static String addSchedule(Schedule schedule){
-        SCHEDULES.add(schedule);
-        return "Added successfully";
+        
+        String msg = WebServiceConnector.callWebService(HTTP_METHOD.POST, "schedule", schedule, String.class);
+        
+        return msg;
     }
     
     public static String updateSchedule(Schedule schedule){

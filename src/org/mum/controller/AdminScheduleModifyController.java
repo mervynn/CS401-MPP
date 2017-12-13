@@ -8,7 +8,9 @@ package org.mum.controller;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -58,9 +60,15 @@ public class AdminScheduleModifyController implements Initializable {
     @FXML
     private DatePicker dateTime;
     @FXML
+    private TextField txtTime;
+    @FXML
     private VBox vboxSectionPrice;
+
     @FXML
     private VBox vform;
+
+    private List<SectionTemplate> sections;
+    private Map<Integer, TextField> sectionPriceMap; //Maps <SectionTemplateID, TextField>
 
     /**
      * Initializes the controller class.
@@ -87,9 +95,14 @@ public class AdminScheduleModifyController implements Initializable {
                 if(chbTitle.getSelectionModel().getSelectedIndex() != -1 && 
                     chbTemplate.getSelectionModel().getSelectedIndex() != -1){
                      //String movieId = this.chbTitle.getValue().getId();
-                    String templateId = String.valueOf(newValue);
-                    List<SectionTemplate> sections = SectionTemplateService.getSectionsByTemplateId(templateId);
+                     
+                     chbTemplate.getSelectionModel().select(newValue.intValue());
+                     System.out.println(chbTemplate.getValue());
+                     
+                    String templateId = String.valueOf(chbTemplate.getSelectionModel().getSelectedItem().getId());
+                    sections = SectionTemplateService.getSectionsByTemplateId(templateId);
                     vboxSectionPrice.getChildren().clear();
+                    sectionPriceMap = new HashMap<Integer, TextField>();
                     double height = 0;
                     for(SectionTemplate st : sections){
                         HBox hb = new HBox();
@@ -102,6 +115,7 @@ public class AdminScheduleModifyController implements Initializable {
                         Label lb = new Label(st.getSectionLabel());
                         l.getChildren().add(lb);
                         TextField tf = new TextField();
+                        sectionPriceMap.put(Integer.parseInt(st.getId()), tf);
                         tf.setUserData(st.getId());
                         r.getChildren().add(tf);
                         hb.getChildren().add(l);
@@ -158,19 +172,30 @@ public class AdminScheduleModifyController implements Initializable {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yyyy");
         Schedule schedule = new Schedule();
         schedule.setId(this.hidId.getText());
-        schedule.setDate(sdf.format(this.dateTime.getValue()));
-        schedule.setTime(sdf.format(this.dateTime.getValue()));
+        schedule.setDate(this.dateTime.getValue().getMonthValue()+ "-" +
+                         this.dateTime.getValue().getDayOfMonth() + "-" +
+                         this.dateTime.getValue().getYear());
+        schedule.setTime(txtTime.getText());
+        schedule.setMovieId(chbTitle.getSelectionModel().getSelectedItem().getId());
+        schedule.setTemplateId(chbTemplate.getSelectionModel().getSelectedItem().getId());
         List<Node> nodes = vboxSectionPrice.getChildren();
         List<SectionPrice> sectionPrices = new ArrayList<>();
+        for(SectionTemplate secTemp : sections) {
+            SectionPrice sp = new SectionPrice(secTemp.getSectionLabel(), Double.parseDouble(sectionPriceMap.get(Integer.parseInt(secTemp.getId())).getText()));
+            sp.setSectionId(secTemp.getId());
+            sectionPrices.add(sp);
+        }
+        
+        
         if(Constant.PAGETYPE_ADD.equals(ApplicationContext.stage.getUserData())){
-            for(Node node : nodes){
-                TextField tf = (TextField)((HBox) node).getChildren().get(1);
-                SectionPrice sp = new SectionPrice();
-                sp.setPrice(Double.valueOf(tf.getText()));
-                // session_template talbe primary key
-                sp.setSectionId(tf.getUserData().toString());
-                sectionPrices.add(sp);
-            }
+//            for(Node node : nodes){
+//                TextField tf = (TextField)((HBox) node).getChildren().get(1);
+//                SectionPrice sp = new SectionPrice();
+//                sp.setPrice(Double.valueOf(tf.getText()));
+//                // session_template talbe primary key
+//                sp.setSectionId(tf.getUserData().toString());
+//                sectionPrices.add(sp);
+//            }
             schedule.setSectionPrices(sectionPrices);
             AlertMaker.showMessage(ScheduleService.addSchedule(schedule));
         }else{
@@ -186,7 +211,7 @@ public class AdminScheduleModifyController implements Initializable {
             AlertMaker.showMessage(ScheduleService.updateSchedule(schedule));
         }
         ((Stage) dateTime.getScene().getWindow()).close();
-        ((AdminMovieListController) ApplicationContext.stage.getScene().getUserData()).loadDate();
+        ((AdminScheduleListController) ApplicationContext.stage.getScene().getUserData()).loadDate();
     }
 
     @FXML
