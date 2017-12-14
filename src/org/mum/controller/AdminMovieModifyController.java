@@ -23,6 +23,7 @@ import org.mum.model.Movie;
 import org.mum.service.MovieService;
 import org.mum.utilities.AlertMaker;
 import org.mum.utilities.Constant;
+import org.springframework.util.StringUtils;
 
 /**
  * FXML Controller class
@@ -68,6 +69,7 @@ public class AdminMovieModifyController implements Initializable {
 
     @FXML
     private void handleSaveAction(ActionEvent event) {
+        if(!isValidForm()) return;
         Movie m = new Movie();
         m.setId(this.hidId.getText());
         m.setGenre(String.valueOf(this.chbGenre.getSelectionModel().getSelectedIndex()));
@@ -92,6 +94,16 @@ public class AdminMovieModifyController implements Initializable {
 
     @FXML
     private void handleImageSection(ActionEvent event) {
+    }
+    
+    private boolean isValidForm(){
+        if(StringUtils.isEmpty(txtTitle.getText()) || StringUtils.isEmpty(txtDescription.getText()) 
+                || StringUtils.isEmpty(fileImage.getText()) || StringUtils.isEmpty(txtDuration.getText())
+                || chbGenre.getValue() == null){
+            AlertMaker.showMessage("please make sure all input intems aren't empty");
+            return false;
+        }
+        return true;
     }
     
 }

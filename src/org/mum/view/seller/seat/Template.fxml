@@ -146,16 +146,19 @@
          <top>
             <HBox prefHeight="48.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox prefHeight="43.0" prefWidth="496.0">
+                  <HBox prefHeight="43.0" prefWidth="1200.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="521.0" style="-fx-font-family: &quot;Arial Rounded MT Bold&quot;, &quot;Helvetica Rounded&quot;, Arial, sans-serif;;" text="Cinema Ticketing System" textFill="#50a6de">
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="547.0" style="-fx-font-family: &quot;Arial Rounded MT Bold&quot;, &quot;Helvetica Rounded&quot;, Arial, sans-serif;;" text="Cinema Ticketing System" textFill="#50a6de">
                            <font>
                               <Font size="33.0" />
                            </font>
+                           <padding>
+                              <Insets right="65.0" />
+                           </padding>
                         </Label>
                      </children>
                   </HBox>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="544.0">
+                  <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="600.0">
                      <children>
                         <Hyperlink fx:id="linkChangePin" onAction="#handleChangePINWindowAction" style="-fx-underline: true;" text="Change PIN" />
                         <Hyperlink fx:id="linkLogout" onAction="#handleLogoutAction" style="-fx-underline: true;" text="Logout" />

@@ -21,6 +21,7 @@ import org.mum.context.ApplicationContext;
 import org.mum.model.User;
 import org.mum.service.UserService;
 import org.mum.utilities.Utilities;
+import org.springframework.util.StringUtils;
 
 /**
  *
@@ -55,7 +56,8 @@ public class LoginController extends Parent implements Initializable {
     private void handleLoginAction(ActionEvent event) {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-        if("".equals(username) || "".equals(password)){
+        
+        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
             this.labMsg.setText("username or password can not be empty");
             return;
         }

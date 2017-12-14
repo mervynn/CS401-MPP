@@ -211,12 +211,15 @@ public class AdminScheduleModifyController implements Initializable {
         boolean checkRes = true;
         for(Node node : nodes){
             TextField tf = (TextField)((HBox)((HBox) node).getChildren().get(1)).getChildren().get(1);
-            if("".equals(tf.getText())){
+            if(StringUtils.isEmpty(tf.getText())){
                 checkRes = false;
                 break;
             }
         }
-        if(!checkRes || this.txtDate.getValue() == null || StringUtils.isEmpty(this.txtTime.getText())){
+        
+        
+        if(!checkRes || this.txtDate.getValue() == null || StringUtils.isEmpty(this.txtTime.getText())
+                || this.chbTitle.getValue() == null || this.chbTemplate.getValue() == null){
             AlertMaker.showMessage("please make sure all input intems aren't empty");
             return false;
         }

@@ -20,6 +20,7 @@ import org.mum.model.Seat;
 import org.mum.service.SeatService;
 import org.mum.utilities.AlertMaker;
 import org.mum.utilities.Constant;
+import org.springframework.util.StringUtils;
 
 /**
  * FXML Controller class
@@ -66,6 +67,7 @@ public class AdminSeatModifyController implements Initializable {
 
     @FXML
     private void handleSaveAction(ActionEvent event) {
+        if(!isValidForm()) return;
         Seat u = new Seat();
         u.setId(this.hidId.getText());
         u.setStatus(this.txtStatus.getText());
@@ -77,6 +79,14 @@ public class AdminSeatModifyController implements Initializable {
     @FXML
     private void handleCancelAction(ActionEvent event) {
         ((Stage)txtMovie.getScene().getWindow()).close();
+    }
+    
+    private boolean isValidForm(){
+        if(StringUtils.isEmpty(txtStatus.getText())){
+            AlertMaker.showMessage("please make sure all input intems aren't empty");
+            return false;
+        }
+        return true;
     }
     
 }

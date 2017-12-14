@@ -20,6 +20,7 @@ import org.mum.model.User;
 import org.mum.service.UserService;
 import org.mum.utilities.AlertMaker;
 import org.mum.utilities.Constant;
+import org.springframework.util.StringUtils;
 
 /**
  * FXML Controller class
@@ -66,6 +67,7 @@ public class AdminUserModifyController implements Initializable {
 
     @FXML
     private void handleSaveAction(ActionEvent event) {
+        if(!isValidForm()) return;
         User u = new User();
         u.setId(this.hidId.getText());
         u.setUsername(this.txtUserName.getText());
@@ -86,6 +88,16 @@ public class AdminUserModifyController implements Initializable {
     @FXML
     private void handleCancelAction(ActionEvent event) {
         ((Stage)txtUserName.getScene().getWindow()).close();
+    }
+
+    private boolean isValidForm(){
+        if(StringUtils.isEmpty(txtUserName.getText()) || StringUtils.isEmpty(txtPassword.getText())
+                || StringUtils.isEmpty(txtRoleType.getText()) || StringUtils.isEmpty(txtFirstName.getText())
+                || StringUtils.isEmpty(txtLastName.getText()) || StringUtils.isEmpty(txtEmail.getText())){
+            AlertMaker.showMessage("please make sure all input intems aren't empty");
+            return false;
+        }
+        return true;
     }
     
 }

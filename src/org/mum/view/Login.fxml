@@ -20,7 +20,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="txtUsername" onKeyPressed="#handleEnterAction" prefHeight="27.0" prefWidth="200.0" text="dalsian" />
+                        <TextField fx:id="txtUsername" onKeyPressed="#handleEnterAction" prefHeight="27.0" prefWidth="200.0" text="admin" />
                      </children>
                   </HBox>
                </children>
