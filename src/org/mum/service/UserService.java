@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import org.mum.model.User;
@@ -56,36 +57,22 @@ public class UserService {
     }
     
     public static List<User> getUserList(){
-        return USER;
+        User[] users = WebServiceConnector.callWebService(HTTP_METHOD.GET, "user", null, User[].class);
+        return Arrays.asList(users);
     }
     
     public static String addUser(User user){
-        USER.add(user);
-        return "Added successfully";
+        
+        return WebServiceConnector.callWebService(HTTP_METHOD.POST, "user", user, String.class);
     }
     
     public static String updateUser(User user){
-        int i = 0;
-        for(User m : USER){
-            if(m.getId().equals(user.getId())){
-                break;
-            }
-            i++;
-        }
-        USER.remove(i);
-        USER.add(user);
-        return "Updated successfully";
+        
+        return WebServiceConnector.callWebService(HTTP_METHOD.PUT, "user/" + user.getId(), user, String.class);
     }
     
     public static String deleteUser(User user){
-        int i = 0;
-        for(User m : USER){
-            if(m.getId().equals(user.getId()))
-                break;
-            i++;
-        }
-        USER.remove(i);
-        return "Deleted successfully";
+        return WebServiceConnector.callWebService(HTTP_METHOD.DELETE, "user/" + user.getId(), user, String.class);
     }
     
     public static List<User> fuzzyQuery(String keyword){
@@ -99,13 +86,16 @@ public class UserService {
     }
     
     public static String changePassword(User user){
-        for(User m : USER){
-            if(m.getId().equals(user.getId())){
-                m.setPassword(user.getPassword());
-                break;
-            }
-        }
-        return "Updated successfully";
+   
+        HttpHeaders headers = new HttpHeaders();
+        MultiValueMap<String, Object> map= new LinkedMultiValueMap<String, Object>();
+        map.add("id", user.getId());
+        map.add("password", UserService.hash(user.getPassword()));
+
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(map, headers);
+
+        User u = WebServiceConnector.callWebService(HTTP_METHOD.POST, "changePassword", request, User.class);
+        return (u==null)?"Fail":"Success";
     }
     
     public static String hash(String plain) {

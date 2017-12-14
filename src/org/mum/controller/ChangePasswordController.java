@@ -47,11 +47,11 @@ public class ChangePasswordController implements Initializable {
 
     @FXML
     private void handleSaveAction(ActionEvent event) {
-        if(!this.txtOldPassword.getText().equals(ApplicationContext.currentUser.getPassword())){
+        if(!UserService.hash(this.txtOldPassword.getText()).equals(ApplicationContext.currentUser.getPassword())){
             AlertMaker.showMessage("Old password is incorrect");
             return;
         }
-        if(this.txtOldPassword.getText().equals(this.txtNewPassword.getText())){
+        if(UserService.hash(this.txtOldPassword.getText()).equals(this.txtNewPassword.getText())){
             AlertMaker.showMessage("New password can not be same with old password");
             return;
         }
