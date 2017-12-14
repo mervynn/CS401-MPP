@@ -44,6 +44,7 @@ import edu.mum.cinema.service.SectionTemplateService;
 import edu.mum.cinema.utilities.AlertMaker;
 import edu.mum.cinema.utilities.UtilitiesFactory;
 import java.util.regex.Pattern;
+import javafx.geometry.Pos;
 import org.springframework.util.StringUtils;
 
 /**
@@ -103,9 +104,11 @@ public class AdminScheduleModifyController implements Initializable {
                     for(SectionTemplate st : sections){
                         HBox hb = new HBox();
                         HBox l = new HBox();
+                        l.setAlignment(Pos.CENTER_LEFT);
                         l.setMinWidth(74);
                         l.setMaxWidth(74);
                         HBox r = new HBox();
+                        r.setAlignment(Pos.CENTER_LEFT);
                         hb.setMinHeight(35);
                         height += 35;
                         Label lb = new Label(st.getSectionLabel());
@@ -143,9 +146,11 @@ public class AdminScheduleModifyController implements Initializable {
             for(SectionPrice sp : s.getSectionPrices()){
                 HBox hb = new HBox();
                 HBox l = new HBox();
+                l.setAlignment(Pos.CENTER_LEFT);
                 l.setMinWidth(74);
                 l.setMaxWidth(74);
                 HBox r = new HBox();
+                r.setAlignment(Pos.CENTER_LEFT);
                 hb.setMinHeight(35);
                 height += 35;
                 Label lb = new Label(sp.getSectionName());
