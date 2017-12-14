@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.mum.cinema.controller.SellerScheduleListController">
+   <children>
+      <BorderPane layoutX="-4.0" layoutY="58.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2017 Mingwei &amp; Dalsian">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Text>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <VBox centerShape="false" prefHeight="290.0" prefWidth="485.0" style="-fx-border-color: #c8c8c8;">
+               <children>
+                  <HBox fx:id="hboxTimeSchedule" alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="889.0">
+                     <children>
+                        <Hyperlink text="09-12-2017" underline="true" />
+                        <Hyperlink text="10-12-2017" underline="true" />
+                        <Hyperlink text="11-12-2017" underline="true" />
+                        <Hyperlink text="12-12-2017" underline="true" />
+                        <Hyperlink text="13-12-2017" underline="true" />
+                     </children>
+                  </HBox>
+                  <ScrollPane prefHeight="482.0" prefWidth="889.0">
+                    <content>
+                      <AnchorPane fx:id="anchorPaneMovie" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="862.0">
+                           <children>
+                              <VBox fx:id="vboxMovieSchedule" prefHeight="377.0" prefWidth="887.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-25.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox prefHeight="162.0" prefWidth="651.0">
+                                       <children>
+                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <ImageView fitHeight="150.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../assets/img/avatar.jpg" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="109.0" prefWidth="547.0">
+                                             <children>
+                                                <HBox prefHeight="12.0" prefWidth="785.0">
+                                                   <children>
+                                                      <Label text="AVATAR" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="47.0" prefWidth="785.0">
+                                                   <children>
+                                                      <Label text="Label" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="81.0" prefWidth="785.0">
+                                                   <children>
+                                                      <Label text="On the lush alien world of Pandora live the Na'vi, beings who appear primitive but are highly evolved. Because the planet's environment is poisonous, human/Na'vi hybrids, called Avatars, must link to human minds to allow for free movement on Pandora. Jake Sully (Sam Worthington), a paralyzed former Marine,..." wrapText="true" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="39.0" prefWidth="785.0">
+                                                   <children>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="78.0">
+                                                         <children>
+                                                            <Label text="Select time" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="28.0" prefWidth="258.0">
+                                                         <children>
+                                                            <Hyperlink prefHeight="28.0" prefWidth="50.0" text="15:00" underline="true" />
+                                                            <Hyperlink prefHeight="28.0" prefWidth="50.0" text="17:00" underline="true" />
+                                                            <Hyperlink prefHeight="28.0" prefWidth="50.0" text="20:00" underline="true" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+               </children></VBox>
+         </center>
+         <left>
+            <VBox prefHeight="290.0" prefWidth="109.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnMainpage" mnemonicParsing="false" onAction="#handleMainpageAction" prefHeight="27.0" prefWidth="114.0" text="Mainpage" />
+                  <Button fx:id="btnSchedule" defaultButton="true" mnemonicParsing="false" onAction="#handleScheduleAction" prefHeight="27.0" prefWidth="118.0" text="Tickets Selling" />
+                  <Button fx:id="btnSeats" mnemonicParsing="false" onAction="#handleReleaseAction" prefHeight="27.0" prefWidth="116.0" text="Release Seats" />
+               </children>
+            </VBox>
+         </left>
+         <top>
+            <HBox prefHeight="48.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="43.0" prefWidth="1200.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="547.0" style="-fx-font-family: &quot;Arial Rounded MT Bold&quot;, &quot;Helvetica Rounded&quot;, Arial, sans-serif;;" text="Cinema Ticketing System" textFill="#50a6de">
+                           <font>
+                              <Font size="33.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets right="65.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="600.0">
+                     <children>
+                        <Hyperlink fx:id="linkChangePin" onAction="#handleChangePINWindowAction" style="-fx-underline: true;" text="Change PIN" />
+                        <Hyperlink fx:id="linkLogout" onAction="#handleLogoutAction" style="-fx-underline: true;" text="Logout" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

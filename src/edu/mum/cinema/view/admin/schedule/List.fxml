@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.mum.cinema.controller.AdminScheduleListController">
+   <children>
+      <BorderPane layoutX="-4.0" layoutY="58.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2017 Mingwei &amp; Dalsian">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Text>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <VBox centerShape="false" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #c8c8c8;">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="487.0">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="1800.0">
+                           <children>
+                              <TextField fx:id="txtSearch">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#handleSearchAction" text="Search" />
+                              <Button fx:id="btnAddWindow" mnemonicParsing="false" onAction="#handleAddWindowAction" text="+ Add Schedule">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin></Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tableVSchedule" prefHeight="432.0" prefWidth="889.0">
+                     <columns>
+                        <TableColumn fx:id="colId" prefWidth="89.0" text="Id" />
+                        <TableColumn fx:id="colDate" prefWidth="114.0" text="Date" />
+                        <TableColumn fx:id="colTime" minWidth="0.0" prefWidth="153.0" text="Time" />
+                        <TableColumn fx:id="colMovie" prefWidth="167.0" text="Movie" />
+                        <TableColumn fx:id="colHall" prefWidth="180.0" text="Hall" />
+                     </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                              <MenuItem fx:id="btnRefresh" mnemonicParsing="false" onAction="#handleRefreshAction" text="Refresh" />
+                            <MenuItem fx:id="btnEdit" mnemonicParsing="false" onAction="#handleEditAction" text="Edit" />
+                              <MenuItem fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDeleteAction" text="Delete" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </TableView>
+                  <Pagination prefHeight="46.0" prefWidth="487.0" />
+               </children>
+            </VBox>
+         </center>
+         <left>
+            <VBox prefHeight="290.0" prefWidth="109.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnMainpage" mnemonicParsing="false" onAction="#handleMainpageAction" prefHeight="27.0" prefWidth="114.0" text="Mainpage" />
+                  <Button fx:id="btnMovie" mnemonicParsing="false" onAction="#handleMovieManageAction" prefHeight="27.0" prefWidth="125.0" text="Movie Manage" />
+                  <Button fx:id="btnSchedule" defaultButton="true" mnemonicParsing="false" onAction="#handleScheduleAction" prefHeight="27.0" prefWidth="118.0" text="Schedule" />
+                  <Button fx:id="btnSeats" mnemonicParsing="false" onAction="#handleReleaseAction" prefHeight="27.0" prefWidth="116.0" text="Release Seats" />
+                  <Button fx:id="btnUser" mnemonicParsing="false" onAction="#handleUserManageAction" prefHeight="27.0" prefWidth="115.0" text="User Manage" />
+               </children>
+            </VBox>
+         </left>
+         <top>
+            <HBox prefHeight="48.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="43.0" prefWidth="1200.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="547.0" style="-fx-font-family: &quot;Arial Rounded MT Bold&quot;, &quot;Helvetica Rounded&quot;, Arial, sans-serif;;" text="Cinema Ticketing System" textFill="#50a6de">
+                           <font>
+                              <Font size="33.0" />
+                           </font>
+                           <padding>
+                              <Insets right="65.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="600.0">
+                     <children>
+                        <Hyperlink fx:id="linkChangePin" onAction="#handleChangePINWindowAction" style="-fx-underline: true;" text="Change PIN" />
+                        <Hyperlink fx:id="linkLogout" onAction="#handleLogoutAction" style="-fx-underline: true;" text="Logout" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>
