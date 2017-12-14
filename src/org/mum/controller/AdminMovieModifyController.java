@@ -55,7 +55,7 @@ public class AdminMovieModifyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         chbGenre.setItems(FXCollections.observableArrayList("Drama", "Action", "Advanture", "Comedy", "Fantasy"));
-        if(!Constant.PAGETYPE_ADD.equals(ApplicationContext.stage.getUserData())){
+        if(ApplicationContext.stage.getUserData() instanceof Movie){
             Movie m = (Movie) ApplicationContext.stage.getUserData();
             this.hidId.setText(m.getId());
             this.txtTitle.setText(m.getTitle());
@@ -77,7 +77,7 @@ public class AdminMovieModifyController implements Initializable {
         m.setDuration(this.txtDuration.getText());
         m.setTitle(this.txtTitle.getText());
         m.setImageUrl(this.fileImage.getText());
-        if(Constant.PAGETYPE_ADD.equals(ApplicationContext.stage.getUserData())){
+        if(ApplicationContext.stage.getUserData() instanceof String){
             AlertMaker.showMessage(MovieService.addMovie(m));
         }else{
             AlertMaker.showMessage(MovieService.updateMovie(m));

@@ -146,6 +146,7 @@ public class AdminMovieListController implements Initializable {
     
     @FXML
     private void handleAddWindowAction(ActionEvent event) {
+        ApplicationContext.stage.setUserData(null);
         ApplicationContext.stage.setUserData(Constant.PAGETYPE_ADD);
         ApplicationContext.stage.getScene().setUserData(this);
         Utilities.openWindow("/org/mum/view/admin/movie/Modify.fxml");
