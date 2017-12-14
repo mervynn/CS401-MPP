@@ -62,12 +62,12 @@ public class UserService {
     }
     
     public static String addUser(User user){
-        
+        user.setPassword(UserService.hash(user.getPassword()));
         return WebServiceConnector.callWebService(HTTP_METHOD.POST, "user", user, String.class);
     }
     
     public static String updateUser(User user){
-        
+        user.setPassword(UserService.hash(user.getPassword()));
         return WebServiceConnector.callWebService(HTTP_METHOD.PUT, "user/" + user.getId(), user, String.class);
     }
     
