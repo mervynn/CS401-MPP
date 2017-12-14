@@ -7,6 +7,7 @@ package org.mum.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,7 +61,8 @@ public class AdminMovieModifyController implements Initializable {
             this.fileImage.setText(m.getImageUrl());
             this.txtDuration.setText(m.getDuration());
             this.txtDescription.setText(m.getDescription());
-            this.chbGenre.getSelectionModel().select(Integer.valueOf(m.getGenre()));
+            if(Pattern.matches("\\d+", m.getGenre()))
+                this.chbGenre.getSelectionModel().select(Integer.valueOf(m.getGenre()));
         }
     }
 

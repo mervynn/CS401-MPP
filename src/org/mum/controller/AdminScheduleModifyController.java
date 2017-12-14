@@ -175,6 +175,8 @@ public class AdminScheduleModifyController implements Initializable {
         Date date = Date.from(instant);
         schedule.setDate(sdf.format(date));
         schedule.setTime(this.txtTime.getText());
+        schedule.setMovieId(this.chbTitle.getValue().getId());
+        schedule.setTemplateId(this.chbTemplate.getValue().getId());
         List<Node> nodes = vboxSectionPrice.getChildren();
         List<SectionPrice> sectionPrices = new ArrayList<>();
         if(Constant.PAGETYPE_ADD.equals(ApplicationContext.stage.getUserData())){
